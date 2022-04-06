@@ -34,6 +34,16 @@ jobs:
       - name: Install Bicep registry module tool
         run: dotnet tool install --global Azure.Bicep.RegistryModuleTool
 
+      - name: Debug - Bicep build json
+        run: bicep build main.bicep --outfile debug.json
+        working-directory: ${{ needs.get-module-to-validate.outputs.module_dir }}
+
+      - name: Debug - Upload Module
+        uses: actions/upload-artifact@v2
+        with:
+          name: WizardApp
+          path: ${{ needs.get-module-to-validate.outputs.module_dir }}
+
       - name: Validate module files
         run: brm validate
         working-directory: ${{ needs.get-module-to-validate.outputs.module_dir }}
