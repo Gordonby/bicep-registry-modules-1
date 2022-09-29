@@ -7,7 +7,7 @@ param location string = resourceGroup().location
 @description('How the deployment script should be forced to execute')
 param forceUpdateTag  string = utcNow()
 
-@description('The RoleDefinitionId required for the DeploymentScript resource to interact with KeyVault')
+@description('The RoleDefinitionId required for the DeploymentScript resource to interact with KeyVault. Defaults to Certificate Officer, override when using custom roles.')
 param rbacRolesNeededOnKV string = 'a4417e6f-fecd-4de8-b567-7b0420556985' //KeyVault Certificate Officer
 
 @description('Does the Managed Identity already exists, or should be created')
