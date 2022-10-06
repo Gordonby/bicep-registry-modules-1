@@ -94,13 +94,13 @@ param createUserManagedId bool = true
 @description('Any tags that are to be applied to the Container App')
 param tags object = {}
 
-
-module containerAppsNoACR 'containerapp.bicep' = if (empty(azureContainerRegistry)) {
+/*
+module containerAppsNoACR 'containerapp-acr.bicep' = if (empty(azureContainerRegistry)) {
  name: containerAppName 
  params: {
   location: location
   containerAppEnvName: containerAppEnvName
-  //azureContainerRegistry: ''
+  azureContainerRegistry: ''
   containerAppName: containerAppName
   containerImage: containerImage
   cpuCore: cpuCore
@@ -119,8 +119,9 @@ module containerAppsNoACR 'containerapp.bicep' = if (empty(azureContainerRegistr
   targetPort: targetPort
  }
 }
+*/
 
-module containerAppsACR 'containerapp-acr.bicep' = if (!empty(azureContainerRegistry)) {
+module containerAppsACR 'containerapp-acr.bicep' = {
   name: '${containerAppName}-acr'
   params: {
    location: location
@@ -145,8 +146,8 @@ module containerAppsACR 'containerapp-acr.bicep' = if (!empty(azureContainerRegi
   }
  }
  
-@description('If ingress is enabled, this is the FQDN that the Container App is exposed on')
-output containerAppFQDN string = enableIngress ? empty(azureContainerRegistry) ? containerAppsNoACR.outputs.containerAppFQDN : containerAppsACR.outputs.containerAppFQDN : ''
+// @description('If ingress is enabled, this is the FQDN that the Container App is exposed on')
+// output containerAppFQDN string = enableIngress ? empty(azureContainerRegistry) ? containerAppsNoACR.outputs.containerAppFQDN : containerAppsACR.outputs.containerAppFQDN : ''
 
-@description('The PrinicpalId of the Container Apps Managed Identity')
-output userAssignedIdPrincipalId string = empty(azureContainerRegistry) ? containerAppsNoACR.outputs.userAssignedIdPrincipalId : containerAppsACR.outputs.userAssignedIdPrincipalId
+// @description('The PrinicpalId of the Container Apps Managed Identity')
+// output userAssignedIdPrincipalId string = empty(azureContainerRegistry) ? containerAppsNoACR.outputs.userAssignedIdPrincipalId : containerAppsACR.outputs.userAssignedIdPrincipalId

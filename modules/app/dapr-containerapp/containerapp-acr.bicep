@@ -77,11 +77,11 @@ param tags object = {}
 
 var acrPullRole = resourceId('Microsoft.Authorization/roleDefinitions', '7f951dda-4ed3-4680-a7ca-43fe172d538d')
 
-resource containerAppEnv 'Microsoft.App/managedEnvironments@2022-03-01' existing = {
+resource containerAppEnv 'Microsoft.App/managedEnvironments@2022-06-01-preview' existing = {
   name: containerAppEnvName
 }
 
-resource containerApp 'Microsoft.App/containerApps@2022-03-01' = {
+resource containerApp 'Microsoft.App/containerApps@2022-06-01-preview' = {
   name: containerAppName
   location: location
   identity: createUserManagedId ? {
@@ -113,7 +113,7 @@ resource containerApp 'Microsoft.App/containerApps@2022-03-01' = {
         enabled: true
       }
       activeRevisionsMode: revisionMode
-      registries: [
+      registries: empty(azureContainerRegistry) ? [] : [
         {
           identity: uai.id
           server: acr.properties.loginServer

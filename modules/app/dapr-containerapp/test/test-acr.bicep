@@ -7,7 +7,7 @@ param pyAppName string = 'pythonappacr'
 @description('If your Acr is already seeded with the images, you can opt-out of the import')
 param importImagesToAcr bool = true
 
-module test3Env 'daprContainerAppEnv101/main.bicep' = {
+module test3Env 'daprContainerAppEnv121/main.bicep' = {
     name: '${deployment().name}-env'
     params: {
       location: location

@@ -10,7 +10,7 @@ param location string = resourceGroup().location
 
 var nodeAppName='nodeapp'
 
-module test2Env 'daprContainerAppEnv101/main.bicep' = {
+module test2Env 'daprContainerAppEnv121/main.bicep' = {
   name: 'test-state'
   params: {
     location: location
@@ -56,7 +56,6 @@ module appPythonClient '../main.bicep' = {
 }
 
 output containerAppEnvironmentName string =  test2Env.outputs.containerAppEnvironmentName
-
 
 
 @description('This module tests the same state app as this file, but through an Azure Container Registry')
